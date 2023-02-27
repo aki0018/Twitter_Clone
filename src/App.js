@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
 function App() {
+  const [message, setMessage] = useState("");
+  const [tweets, setTweets] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setTweets([...tweets, message]);
+    setMessage("");
+  };
+
+  const handleChange = (e) => {
+    setMessage(e.target.value);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>Twitter Clone</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="What's happening?"
+          value={message}
+          onChange={handleChange}
+        />
+        <button type="submit">Tweet</button>
+      </form>
+      <ul className="tweets">
+        {tweets.map((tweet, index) => (
+          <li key={index}>{tweet}</li>
+        ))}
+      </ul>
     </div>
   );
 }
